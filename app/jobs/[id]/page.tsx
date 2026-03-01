@@ -81,9 +81,10 @@ export default function JobPage() {
         const stack = techDict.filter(t => new RegExp(`(\\s|^)${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\s|,|\\.|;|$)`, 'i').test(cleanText));
 
         const bulletPoints = cleanText.split(/[.!?;•]/)
-            .map(s => s.trim().replace(/^[-•]\s*/, ''))
-            .filter(s => s.length > 40 && s.length < 250)
-            .filter(s => !/(pursuant|fair chance|equal opportunity|diversity|discrimination)/i.test(s))
+            // Указываем (s: string) в каждом методе
+            .map((s: string) => s.trim().replace(/^[-•]\s*/, ''))
+            .filter((s: string) => s.length > 40 && s.length < 250)
+            .filter((s: string) => !/(pursuant|fair chance|equal opportunity|diversity|discrimination)/i.test(s))
             .slice(0, 6);
 
         return { level, salary, stack, bulletPoints };

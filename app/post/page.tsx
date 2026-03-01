@@ -11,7 +11,14 @@ function PostJobForm() {
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [formData, setFormData] = useState({
-        title: '', company: '', salary: '', location: '', description: '', link: ''
+        title: '',
+        company: '',
+        salary: '',
+        location: 'Remote',
+        description: '',
+        link: '',
+        category: 'Software', // Значение по умолчанию
+        tags: ['Python', 'Remote', 'Full-time'], // Пример тегов
     });
 
     useEffect(() => {

@@ -4,7 +4,6 @@ import { createClient } from '@supabase/supabase-js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-// Создаем админ-клиент прямо здесь
 const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
@@ -26,29 +25,31 @@ export async function POST(req: Request) {
 
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object as Stripe.Checkout.Session;
-        const metadata = session.metadata;
 
-        if (metadata) {
-            console.log("🔔 Payment successful, inserting job:", metadata.title);
+        // Достаем ID вакансии, который мы передали как client_reference_id
+        const jobId = session.client_reference_id;
 
+        if (jobId) {
+            console.log("🔔 Payment successful for Job ID:", jobId);
+
+            // ОБНОВЛЯЕМ статус вакансии на "оплачено"
             const { error } = await supabaseAdmin
                 .from('jobs')
-                .insert([{
-                    title: metadata.title,
-                    company: metadata.company,
-                    salary: metadata.salary,
-                    location: metadata.location,
-                    description: metadata.description,
-                    link: metadata.link || '',
-                    // Добавь is_paid если есть такая колонка в базе
+                .update({
+                    is_paid: true,
+                    // Можно также обновить дату публикации на дату оплаты
                     created_at: new Date().toISOString()
-                }]);
+                })
+                .eq('id', jobId);
 
             if (error) {
-                console.error("❌ Database error:", error.message);
+                console.error("❌ Supabase Update Error:", error.message);
                 return NextResponse.json({ error: error.message }, { status: 500 });
             }
-            console.log("✅ Job successfully saved to Supabase");
+
+            console.log("✅ Job activated successfully!");
+        } else {
+            console.error("❌ No jobId (client_reference_id) found in session");
         }
     }
 

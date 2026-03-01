@@ -33,8 +33,8 @@ export default function HomePage() {
             const { data } = await supabase
                 .from('jobs')
                 .select('*')
-                .order('created_at', { ascending: false })
-                .range(0, 9999);
+                .eq('is_paid', true) // ПОКАЗЫВАТЬ ТОЛЬКО ОПЛАЧЕННЫЕ
+                .order('created_at', { ascending: false });
 
             if (data) {
                 setJobs(data);

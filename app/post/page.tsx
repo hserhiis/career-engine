@@ -25,21 +25,22 @@ function PostJobForm() {
         setLoading(true);
 
         try {
+            // 1. Создаем черновик в базе через твой API или напрямую
+            // Для безопасности лучше создать отдельный route /api/jobs/create-draft
             const response = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ formData }),
+                body: JSON.stringify({ formData }), // Передаем всё
             });
 
             const data = await response.json();
             if (data.url) {
-                localStorage.setItem('pending_job', JSON.stringify(formData));
                 window.location.href = data.url;
             } else {
                 throw new Error(data.error);
             }
         } catch (err: any) {
-            alert('Payment Error: ' + err.message);
+            alert('Error: ' + err.message);
             setLoading(false);
         }
     };

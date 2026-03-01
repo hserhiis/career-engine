@@ -31,8 +31,8 @@ export async function POST(req: Request) {
                 description: formData.description,
                 link: formData.link || '',
             },
-            success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/post-job?success=true`,
-            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/post-job?canceled=true`,
+            success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/post?success=true`,
+            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/post?canceled=true`,
         });
 
         return NextResponse.json({ url: session.url });

@@ -1,4 +1,9 @@
+import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+
+// Инициализируем Stripe (этого не хватало)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -13,7 +18,12 @@ export async function POST(req: Request) {
         const { data: job, error: dbError } = await supabaseAdmin
             .from('jobs')
             .insert([{
-                ...formData,
+                title: formData.title,
+                company: formData.company,
+                salary: formData.salary,
+                location: formData.location,
+                description: formData.description,
+                link: formData.link,
                 is_paid: false
             }])
             .select()
@@ -33,7 +43,7 @@ export async function POST(req: Request) {
                 quantity: 1,
             }],
             mode: 'payment',
-            // ПЕРЕДАЕМ ID ВАКАНСИИ
+            // ПЕРЕДАЕМ ID ИЗ БАЗЫ В STRIPE
             client_reference_id: job.id,
             success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/post?success=true`,
             cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/post?canceled=true`,

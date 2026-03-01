@@ -35,7 +35,6 @@ export async function POST(req: Request) {
                 location: formData.location || "Remote",
                 tags: formData.tags || [],
                 is_hot: true,
-                is_featured: true,
                 is_paid: false,
                 created_at: new Date().toISOString()
             }])

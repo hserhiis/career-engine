@@ -140,7 +140,7 @@ export default function JobPage() {
                     {extractedInfo.bulletPoints.length > 0 && (
                         <section className="bg-[#1c1c1e]/20 border border-white/5 p-10 rounded-[40px] backdrop-blur-sm">
                             <div className="flex items-center gap-3 text-[#86868B] mb-8"><Layers className="w-7 h-7" /><span className="text-[16px] uppercase font-bold tracking-widest">Core Mission</span></div>
-                            <div className="grid gap-6">{extractedInfo.bulletPoints.map((p, i) => <div key={i} className="flex items-start gap-4 group"><div className="w-1.5 h-1.5 rounded-full bg-[#0071E3] mt-2.5 shrink-0 shadow-[0_0_10px_rgba(0,113,227,0.5)]" /><p className="text-[#A1A1A6] text-lg leading-relaxed group-hover:text-white transition-colors">{p}</p></div>)}</div>
+                            <div className="grid gap-6">{extractedInfo.bulletPoints.map((p: string, i: number) => <div key={i} className="flex items-start gap-4 group"><div className="w-1.5 h-1.5 rounded-full bg-[#0071E3] mt-2.5 shrink-0 shadow-[0_0_10px_rgba(0,113,227,0.5)]" /><p className="text-[#A1A1A6] text-lg leading-relaxed group-hover:text-white transition-colors">{p}</p></div>)}</div>
                         </section>
                     )}
 

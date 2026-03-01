@@ -105,6 +105,18 @@ function PostJobForm() {
                             <textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} rows={5} className="w-full bg-white/5 border border-white/5 rounded-2xl p-5 outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-white text-lg placeholder:text-gray-700" placeholder="What's the stack? What's the mission?" />
                         </div>
 
+                        <div className="bg-white/5 p-4 rounded-2xl border border-white/5 focus-within:border-blue-500/50 transition-all">
+                            <p className="text-gray-500 text-xs mb-1 uppercase tracking-wider font-bold">Application Link / URL</p>
+                            <input
+                                required
+                                type="url"
+                                value={formData.link}
+                                onChange={e => setFormData({...formData, link: e.target.value})}
+                                className="bg-transparent border-none outline-none w-full text-blue-400 text-lg font-bold placeholder:text-gray-700"
+                                placeholder="https://company.com/jobs/123"
+                            />
+                        </div>
+
                         <button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-center py-4 md:py-5 rounded-2xl font-bold text-lg md:text-xl transition-all shadow-lg shadow-blue-500/25 flex items-center justify-center gap-3 active:scale-[0.98]">
                             {loading ? <Loader2 className="animate-spin" /> : 'Publish Listing — $99'}
                         </button>

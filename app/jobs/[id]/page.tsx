@@ -61,7 +61,8 @@ export default function JobPage() {
         if (job.salary && job.salary.length > 4 && job.salary !== "Competitive") {
             rawSalary = job.salary;
         } else if (rangeMatch) {
-            rawSalary = rangeMatch.sort((a, b) => b.length - a.length)[0].replace(/\s+/g, ' ').trim();
+            // Добавляем (a: string, b: string) чтобы TS понял, что это массив строк
+            rawSalary = rangeMatch.sort((a: string, b: string) => b.length - a.length)[0].replace(/\s+/g, ' ').trim();
         } else if (singleMatch) {
             rawSalary = singleMatch[0].trim();
         }
